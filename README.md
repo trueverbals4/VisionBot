@@ -29,7 +29,7 @@ of the Hoodtronics ImageGenAI platform pipeline.
 | MCU | ESP32-CAM (AI-Thinker) |
 | Camera | OV2640 2MP |
 | Tilt_servo | SVG90 / MG90S |5v|.25A |100uF_Ceram_Cap & 100nF_elect_Cap |
-| Tan_servo | SVG90 / MG90S |5v|.25A |100uF_Ceram_Cap & 100nF_elect_Cap |
+| Pan_servo | SVG90 / MG90S |5v|.25A |100uF_Ceram_Cap & 100nF_elect_Cap |
 | Enclosure | Custom 3D PETG & TPU | design_ame.stl |
 | Power_supply| 5V_USB 2(18650_Li_Batt_bank |
 | Hoodtronics_contorl_board Not Neccessary|  
