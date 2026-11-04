@@ -1,0 +1,70 @@
+# VisionBot — Arduino Library Installation Guide
+
+Hoodtronics LLC — Indianapolis, IN
+hoodtronics.com
+
+---
+
+## Step 1 — Install ESP32 Board Support
+
+1. Open Arduino IDE
+2. Go to **File → Preferences**
+3. Find the field: **Additional boards manager URLs**
+4. Paste this URL: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+5. Click **OK**
+6. Go to **Tools → Board → Boards Manager**
+7. Search: `esp32`
+8. Find **esp32 by Espressif Systems**
+9. Click **Install** — wait for download to complete
+10. Go to **Tools → Board → ESP32 Arduino → AI Thinker ESP32-CAM**
+
+---
+
+## Step 2 — Install EloquentEsp32cam
+
+1. Go to **Sketch → Include Library → Manage Libraries**
+2. Search: `EloquentEsp32cam`
+3. Find **EloquentEsp32cam by eloquentarduino**
+4. Click **Install**
+
+---
+
+## Step 3 — Install WiFiManager
+
+1. Go to **Sketch → Include Library → Manage Libraries**
+2. Search: `WiFiManager`
+3. Find **WiFiManager by tzapu**
+4. Click **Install**
+
+---
+
+## Step 4 — Flash Settings
+
+| Setting | Value |
+|---|---|
+| Board | AI Thinker ESP32-CAM |
+| Partition Scheme | Huge APP (3MB No OTA) |
+| CPU Frequency | 240MHz |
+| Upload Speed | 115200 |
+| Port | Your USB-to-UART adapter |
+
+---
+
+## Step 5 — First Boot WiFi Setup
+
+1. Power on VisionBot
+2. Connect your phone or laptop to: **SSID: `2DoFCVBOT`**
+3. Password: `computervision`
+4. A captive portal opens — enter your LAN credentials
+5. VisionBot saves them and connects automatically on reboot
+
+---
+
+## Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| Board not found | Re-install esp32 Espressif package |
+| Upload fails | Hold GPIO 0 LOW during upload |
+| Camera error | Check partition is set to Huge APP |
+| WiFi portal won't open | Power cycle the board |
