@@ -6,7 +6,7 @@ hoodtronics.com
 ---
 
 ## Step 1 — Install ESP32 Board Support
-
+**## download the arduino app at:https://www.arduino.cc/en/software
 1. Open Arduino IDE
 2. Go to **File → Preferences**
 3. Find the field: **Additional boards manager URLs**
