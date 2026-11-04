@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VisionBot Control</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --blue: #4fc3f7;
+    --teal: #26c6da;
+    --gold: #ffd54f;
+    --text: #e6edf3;
+    --muted: #8b949e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px;
+    gap: 16px;
+  }
+  h1 { font-size: 16px; letter-spacing: .1em; color: var(--blue); text-transform: uppercase; }
+  .ip-row {
+    display: flex; gap: 8px; width: 100%; max-width: 500px;
+  }
+  .ip-row input {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); padding: 8px 12px; border-radius: 6px; font-size: 14px;
+  }
+  .ip-row button {
+    background: var(--blue); color: #000; border: none; padding: 8px 16px;
+    border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px;
+  }
+  .stream-box {
+    width: 100%; max-width: 500px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+  }
+  .stream-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .stream-placeholder { color: var(--muted); font-size: 13px; text-align: center; padding: 20px; }
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(3, 56px);
+    grid-template-rows: repeat(3, 56px);
+    gap: 6px;
+  }
+  .btn {
+    background: var(--surface); border: 1px solid var(--border); color: var(--text);
+    border-radius: 8px; cursor: pointer; font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .btn:active { background: var(--blue); color: #000; }
+  .btn.center { background: var(--border); font-size: 12px; letter-spacing: .05em; }
+  .status-bar {
+    width: 100%; max-width: 500px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; font-size: 12px; color: var(--muted);
+    display: flex; justify-content: space-between;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #444; display: inline-block; margin-right: 6px; }
+  .dot.on { background: #26c6da; box-shadow: 0 0 6px #26c6da; }
+  .label { font-size: 11px; color: var(--muted); text-align: center; letter-spacing: .05em; }
+</style>
+</head>
+<body>
+
+<h1>VisionBot — LAN Controller</h1>
+
+<div class="ip-row">
+  <input id="ipInput" type="text" placeholder="192.168.1.xxx" value="">
+  <button onclick="connect()">Connect</button>
+</div>
+
+<div class="stream-box" id="streamBox">
+  <div class="stream-placeholder" id="placeholder">Enter IP and press Connect</div>
+  <img id="streamImg" src="" alt="MJPEG stream" style="display:none" onerror="streamError()">
+</div>
+
+<div class="label">PAN / TILT</div>
+
+<div class="controls">
+  <div></div>
+  <button class="btn" onmousedown="cmd('tilt_up')" onmouseup="cmd('stop')" ontouchstart="cmd('tilt_up')" ontouchend="cmd('stop')">▲</button>
+  <div></div>
+  <button class="btn" onmousedown="cmd('pan_left')" onmouseup="cmd('stop')" ontouchstart="cmd('pan_left')" ontouchend="cmd('stop')">◀</button>
+  <button class="btn center" onclick="cmd('center')">CTR</button>
+  <button class="btn" onmousedown="cmd('pan_right')" onmouseup="cmd('stop')" ontouchstart="cmd('pan_right')" ontouchend="cmd('stop')">▶</button>
+  <div></div>
+  <button class="btn" onmousedown="cmd('tilt_down')" onmouseup="cmd('stop')" ontouchstart="cmd('tilt_down')" ontouchend="cmd('stop')">▼</button>
+  <div></div>
+</div>
+
+<div class="status-bar">
+  <span><span class="dot" id="dot"></span><span id="statusText">Disconnected</span></span>
+  <span id="ipDisplay">—</span>
+</div>
+
+<script>
+let base = '';
+
+function connect() {
+  const ip = document.getElementById('ipInput').value.trim();
+  if (!ip) return;
+  base = 'http://' + ip;
+  const img = document.getElementById('streamImg');
+  const ph = document.getElementById('placeholder');
+  img.src = base + ':81';
+  img.style.display = 'block';
+  ph.style.display = 'none';
+  document.getElementById('dot').classList.add('on');
+  document.getElementById('statusText').textContent = 'Connected';
+  document.getElementById('ipDisplay').textContent = ip + ':81';
+}
+
+function streamError() {
+  document.getElementById('dot').classList.remove('on');
+  document.getElementById('statusText').textContent = 'Stream error — check IP';
+}
+
+function cmd(action) {
+  if (!base) return;
+  fetch(base + '/cmd?action=' + action).catch(() => {});
+}
+</script>
+</body>
+</html>
