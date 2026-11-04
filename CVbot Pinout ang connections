@@ -1,0 +1,48 @@
+# VisionBot — ESP32-CAM AI-Thinker Pinout
+
+## Camera (OV2640 — built-in, reserved)
+
+| Signal | GPIO |
+|--------|------|
+| XCLK | 0 |
+| SIOD (SDA) | 26 |
+| SIOC (SCL) | 27 |
+| VSYNC | 25 |
+| HREF | 23 |
+| PCLK | 22 |
+| Y9–Y2 data | 35, 34, 39, 36, 21, 19, 18, 5 |
+| PWDN | 32 |
+
+> Do not use these pins for peripherals.
+
+## VisionBot Peripherals
+
+| Component | Signal | GPIO | Notes |
+|-----------|--------|------|-------|
+| Pan servo | PWM | 12 | Confirm in `pan_tilt_control.ino` |yellow or brown pin
+| Tilt servo | PWM | 13 | Confirm in `pan_tilt_control.ino` |yellow or brown pin
+| SSD1306 OLED | SDA | 14 | Confirm in `oled_status.ino` |
+| SSD1306 OLED | SCL | 15 | Confirm in `oled_status.ino` |
+| Onboard flash LED | — | 4 | Active HIGH |
+| Onboard red LED | — | 33 | Active LOW |
+
+## Power
+
+| Rail | Source |
+|------|--------|
+| 5V in | USB or LiPo via regulator |
+| 3.3V | Onboard LDO (500mA max) |
+| Servo power | Separate 5V rail recommended |
+
+> Servos draw transient current. Power them from a separate 5V rail.
+> Do not power servos from the ESP32-CAM's 3.3V pin.
+
+## Serial / Programming
+
+| Signal | GPIO | Baud |
+|--------|------|------|
+| TX | 1 | 115200 |
+| RX | 3 | 115200 |
+
+Connect a USB-to-UART adapter (CH340 or CP2102).
+Hold GPIO 0 LOW at boot to enter flash mode.
