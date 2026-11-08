@@ -1,4 +1,4 @@
-# VisionBot — Computer Vision Bot
+# Computer_Vision_Bot
 
 **Hoodtronics LLC — Indianapolis, IN**
 `Open Source | Edge-ML Camera Platform`
