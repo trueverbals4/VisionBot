@@ -33,6 +33,16 @@ Anyone can deploy it for robotics, surveillance, or machine learning research.
 
 ---
 
+## Assembly Video
+
+[![CVbot Assembly — Hoodtronics LLC](https://img.youtube.com/vi/2B5EVEZePxs/maxresdefault.jpg)](https://youtu.be/2B5EVEZePxs)
+
+> Step-by-step assembly of the 2DOF Pan/Tilt CVbot platform.
+> Heltec Wireless Stick (LoRa) shown is optional for standalone CVbot use;
+> required for the ImaGenAI/Cacadu codec pipeline.
+
+---
+
 ## Hardware
 
 | Component | Part | Spec |
