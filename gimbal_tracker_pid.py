@@ -20,7 +20,8 @@ from ultralytics import YOLO
 # ── ESP32-CAM Target ──────────────────────────────────────────────────────────
 ESP32_IP     = "192.168.1.100"          # Update to your CVbot's DHCP address
 STREAM_URL   = f"http://{ESP32_IP}:81/"
-CONTROL_URL  = f"http://{ESP32_IP}/move"
+PAN_URL      = f"http://{ESP32_IP}/pan"   # Matches Hoodtronics_CVbot_LAN.ino /pan?val=X
+TILT_URL     = f"http://{ESP32_IP}/tilt"  # Matches Hoodtronics_CVbot_LAN.ino /tilt?val=X
 
 # ── Model ─────────────────────────────────────────────────────────────────────
 MODEL_PATH      = "gimbal_tracker/custom_object_v1/weights/best.pt"
@@ -62,11 +63,8 @@ def send_servo_angles(pan, tilt):
     pan  = int(max(0, min(180, round(pan))))
     tilt = int(max(0, min(180, round(tilt))))
     try:
-        requests.get(
-            CONTROL_URL,
-            params={"pan": pan, "tilt": tilt},
-            timeout=0.05
-        )
+        requests.get(PAN_URL,  params={"val": pan},  timeout=0.05)
+        requests.get(TILT_URL, params={"val": tilt}, timeout=0.05)
     except requests.exceptions.RequestException:
         pass   # Drop non-critical servo timeouts silently
 
